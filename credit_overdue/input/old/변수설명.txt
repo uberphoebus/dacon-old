@@ -1,0 +1,253 @@
+*index
+*gender       : 성별
+*car          : 차량 소유 여부
+*reality      : 부동산 소유 여부
+*child_num    : 자녀 수
+*income_total : 연간 소득
+*income_type  : 소득 분류 / ['Commercial associate', 'Working', 'State servant', 'Pensioner', 'Student']
+*edu_type     : 교육 수준 / ['Higher education' ,'Secondary / secondary special', 'Incomplete higher', 'Lower secondary', 'Academic degree']
+*family_type  : 결혼 여부 / ['Married', 'Civil marriage', 'Separated', 'Single / not married', 'Widow']
+*house_type   : 생활 방식 / ['Municipal apartment', 'House / apartment', 'With parents', 'Co-op apartment', 'Rented apartment', 'Office apartment']
+*DAYS_BIRTH   : 출생일    / 데이터 수집 당시 (0)부터 역으로 셈, 즉, -1은 데이터 수집일 하루 전에 태어났음을 의미
+*DAYS_EMPLOYED: 업무시작일 / 데이터 수집 당시 (0)부터 역으로 셈, 즉, -1은 데이터 수집일 하루 전부터 일을 시작함을 의미
+						양수 값은 고용되지 않은 상태를 의미함
+*FLAG_MOBIL   : 핸드폰 소유 여부
+*work_phone   : 업무용 전화 소유 여부
+*phone        : 전화 소유 여부
+*email        : 이메일 소유 여부
+*occyp_type   : 직업 유형													
+*family_size  : 가족 규모
+*begin_month  : 신용카드 발급 월 / 데이터 수집 당시 (0)부터 역으로 셈, 즉, -1은 데이터 수집일 한 달 전에 신용카드를 발급함을 의미
+
+@credit: 사용자의 신용카드 대금 연체를 기준으로 한 신용도 => 낮을 수록 높은 신용의 신용카드 사용자를 의미함
+
+<cols>
+null cols   ; occyp_type
+object cols ; gender, car, reality, income_type, edu_type, family_type, house_type, occyp_type
+dummy_cols = ['income_type', 'family_type', 'house_type', 'occyp_type']
+normal_cols = ['income_total', 'en_DAYS_EMPLOYED', 'family_size', 'en_DAYS_BIRTH', 'en_begin_month'] ; check outliers & scale
+drop_cols = ['index', 'FLAG_MOBIL', ]
+다중공선성 위험 ; child_num & family_size
+
+income_total                      10.528901
+work_phone                         1.398089
+phone                              1.836328
+email                              1.020631
+family_size                        3.110126
+en_gender                          1.700564
+en_car                             1.943154
+en_reality                         1.938509
+en_edu_type                        2.171373
+en_DAYS_BIRTH                     13.867519
+en_DAYS_EMPLOYED                   9.855486
+en_begin_month                    34.795512
+occyp_type_Accountants             0.474614
+occyp_type_Cleaning staff          0.244575
+occyp_type_Cooking staff           0.335491
+occyp_type_Core staff              0.837789
+occyp_type_Drivers                 0.590173
+occyp_type_HR staff                0.062659
+occyp_type_High skill tech staff   0.522898
+occyp_type_IT staff                0.054293
+occyp_type_Laborers                1.072241
+occyp_type_Low-skill Laborers      0.109773
+occyp_type_Managers                0.719301
+occyp_type_Medicine staff          0.375555
+occyp_type_Private service staff   0.254566
+occyp_type_Realty agents           0.073697
+occyp_type_Sales staff             0.793697
+occyp_type_Secretaries             0.125591
+occyp_type_Security staff          0.281260
+occyp_type_Waiters/barmen staff    0.151132
+occyp_type_nan                     1.042769
+income_type_Commercial associate   0.904874
+income_type_Pensioner              0.255835
+income_type_State servant          0.629100
+income_type_Student                0.014881
+income_type_Working                1.040966
+family_type_Civil marriage         0.593019
+family_type_Married                0.739705
+family_type_Separated              0.500122
+family_type_Single / not married   0.596254
+family_type_Widow                  0.315317
+house_type_Co-op apartment         0.085023
+house_type_House / apartment       0.748297
+house_type_Municipal apartment     0.403190
+house_type_Office apartment        0.149952
+house_type_Rented apartment        0.284820
+house_type_With parents            0.450381>
+
+<corr>
+
+* df0 ========================================================
+Int64Index: 26457 entries, 0 to 5455
+Data columns (total 48 columns):
+ #   Column                            Non-Null Count  Dtype  
+---  ------                            --------------  -----  
+ 0   income_total                      26457 non-null  float64
+ 1   work_phone                        26457 non-null  int64  
+ 2   phone                             26457 non-null  int64  
+ 3   email                             26457 non-null  int64  
+ 4   family_size                       26457 non-null  int64  
+ 5   credit                            21001 non-null  float64
+ 6   en_gender                         26457 non-null  int64  
+ 7   en_car                            26457 non-null  int64  
+ 8   en_reality                        26457 non-null  int64  
+ 9   en_edu_type                       26457 non-null  int64  
+ 10  en_DAYS_BIRTH                     26457 non-null  int64  
+ 11  en_DAYS_EMPLOYED                  26457 non-null  int64  
+ 12  en_begin_month                    26457 non-null  int64  
+ 13  occyp_type_Accountants            26457 non-null  uint8  
+ 14  occyp_type_Cleaning staff         26457 non-null  uint8  
+ 15  occyp_type_Cooking staff          26457 non-null  uint8  
+ 16  occyp_type_Core staff             26457 non-null  uint8  
+ 17  occyp_type_Drivers                26457 non-null  uint8  
+ 18  occyp_type_HR staff               26457 non-null  uint8  
+ 19  occyp_type_High skill tech staff  26457 non-null  uint8  
+ 20  occyp_type_IT staff               26457 non-null  uint8  
+ 21  occyp_type_Laborers               26457 non-null  uint8  
+ 22  occyp_type_Low-skill Laborers     26457 non-null  uint8  
+ 23  occyp_type_Managers               26457 non-null  uint8  
+ 24  occyp_type_Medicine staff         26457 non-null  uint8  
+ 25  occyp_type_Private service staff  26457 non-null  uint8  
+ 26  occyp_type_Realty agents          26457 non-null  uint8  
+ 27  occyp_type_Sales staff            26457 non-null  uint8  
+ 28  occyp_type_Secretaries            26457 non-null  uint8  
+ 29  occyp_type_Security staff         26457 non-null  uint8  
+ 30  occyp_type_Waiters/barmen staff   26457 non-null  uint8  
+ 31  occyp_type_nan                    26457 non-null  uint8  
+ 32  income_type_Commercial associate  26457 non-null  uint8  
+ 33  income_type_Pensioner             26457 non-null  uint8  
+ 34  income_type_State servant         26457 non-null  uint8  
+ 35  income_type_Student               26457 non-null  uint8  
+ 36  income_type_Working               26457 non-null  uint8  
+ 37  family_type_Civil marriage        26457 non-null  uint8  
+ 38  family_type_Married               26457 non-null  uint8  
+ 39  family_type_Separated             26457 non-null  uint8  
+ 40  family_type_Single / not married  26457 non-null  uint8  
+ 41  family_type_Widow                 26457 non-null  uint8  
+ 42  house_type_Co-op apartment        26457 non-null  uint8  
+ 43  house_type_House / apartment      26457 non-null  uint8  
+ 44  house_type_Municipal apartment    26457 non-null  uint8  
+ 45  house_type_Office apartment       26457 non-null  uint8  
+ 46  house_type_Rented apartment       26457 non-null  uint8  
+ 47  house_type_With parents           26457 non-null  uint8 
+
+* drop encoded ===============================================
+ 0   index                             26457 non-null  int64  
+ 1   child_num                         26457 non-null  int64  
+ 2   income_total                      26457 non-null  float64
+ 3   FLAG_MOBIL                        26457 non-null  int64  
+ 4   work_phone                        26457 non-null  int64  
+ 5   phone                             26457 non-null  int64  
+ 6   email                             26457 non-null  int64  
+ 7   family_size                       26457 non-null  int64  
+ 8   credit                            21001 non-null  float64
+ 9   en_gender                         26457 non-null  int64  
+ 10  en_car                            26457 non-null  int64  
+ 11  en_reality                        26457 non-null  int64  
+ 12  en_edu_type                       26457 non-null  int64  
+ 13  en_DAYS_BIRTH                     26457 non-null  int64  
+ 14  en_DAYS_EMPLOYED                  26457 non-null  int64  
+ 15  en_begin_month                    26457 non-null  int64  
+ 16  occyp_type_Accountants            26457 non-null  uint8  
+ 17  occyp_type_Cleaning staff         26457 non-null  uint8  
+ 18  occyp_type_Cooking staff          26457 non-null  uint8  
+ 19  occyp_type_Core staff             26457 non-null  uint8  
+ 20  occyp_type_Drivers                26457 non-null  uint8  
+ 21  occyp_type_HR staff               26457 non-null  uint8  
+ 22  occyp_type_High skill tech staff  26457 non-null  uint8  
+ 23  occyp_type_IT staff               26457 non-null  uint8  
+ 24  occyp_type_Laborers               26457 non-null  uint8  
+ 25  occyp_type_Low-skill Laborers     26457 non-null  uint8  
+ 26  occyp_type_Managers               26457 non-null  uint8  
+ 27  occyp_type_Medicine staff         26457 non-null  uint8  
+ 28  occyp_type_Private service staff  26457 non-null  uint8  
+ 29  occyp_type_Realty agents          26457 non-null  uint8  
+ 30  occyp_type_Sales staff            26457 non-null  uint8  
+ 31  occyp_type_Secretaries            26457 non-null  uint8  
+ 32  occyp_type_Security staff         26457 non-null  uint8  
+ 33  occyp_type_Waiters/barmen staff   26457 non-null  uint8  
+ 34  occyp_type_nan                    26457 non-null  uint8  
+ 35  income_type_Commercial associate  26457 non-null  uint8  
+ 36  income_type_Pensioner             26457 non-null  uint8  
+ 37  income_type_State servant         26457 non-null  uint8  
+ 38  income_type_Student               26457 non-null  uint8  
+ 39  income_type_Working               26457 non-null  uint8  
+ 40  family_type_Civil marriage        26457 non-null  uint8  
+ 41  family_type_Married               26457 non-null  uint8  
+ 42  family_type_Separated             26457 non-null  uint8  
+ 43  family_type_Single / not married  26457 non-null  uint8  
+ 44  family_type_Widow                 26457 non-null  uint8  
+ 45  house_type_Co-op apartment        26457 non-null  uint8  
+ 46  house_type_House / apartment      26457 non-null  uint8  
+ 47  house_type_Municipal apartment    26457 non-null  uint8  
+ 48  house_type_Office apartment       26457 non-null  uint8  
+ 49  house_type_Rented apartment       26457 non-null  uint8  
+ 50  house_type_With parents           26457 non-null  uint8  
+
+* encoded ===================================================
+(26457, 62)
+ 0   index                             26457 non-null  int64  
+ 1   gender                            26457 non-null  object 
+ 2   car                               26457 non-null  object 
+ 3   reality                           26457 non-null  object 
+ 4   child_num                         26457 non-null  int64  
+ 5   income_total                      26457 non-null  float64
+ 6   income_type                       26457 non-null  object 
+ 7   edu_type                          26457 non-null  object 
+ 8   family_type                       26457 non-null  object 
+ 9   house_type                        26457 non-null  object 
+ 10  DAYS_BIRTH                        26457 non-null  int64  
+ 11  DAYS_EMPLOYED                     26457 non-null  int64  
+ 12  FLAG_MOBIL                        26457 non-null  int64  
+ 13  work_phone                        26457 non-null  int64  
+ 14  phone                             26457 non-null  int64  
+ 15  email                             26457 non-null  int64  
+ 16  occyp_type                        18286 non-null  object 
+ 17  family_size                       26457 non-null  int64  
+ 18  begin_month                       26457 non-null  int64  
+*19  credit                            21001 non-null  float64
+ 20  en_gender                         26457 non-null  int64  
+ 21  en_car                            26457 non-null  int64  
+ 22  en_reality                        26457 non-null  int64  
+ 23  en_edu_type                       26457 non-null  int64  
+ 24  en_DAYS_BIRTH                     26457 non-null  int64  
+ 25  en_DAYS_EMPLOYED                  26457 non-null  int64  
+ 26  en_begin_month                    26457 non-null  int64  
+ --dummies--------------------------------------------------
+ 27  occyp_type_Accountants            26457 non-null  uint8  
+ 28  occyp_type_Cleaning staff         26457 non-null  uint8  
+ 29  occyp_type_Cooking staff          26457 non-null  uint8  
+ 30  occyp_type_Core staff             26457 non-null  uint8  
+ 31  occyp_type_Drivers                26457 non-null  uint8  
+ 32  occyp_type_HR staff               26457 non-null  uint8  
+ 33  occyp_type_High skill tech staff  26457 non-null  uint8  
+ 34  occyp_type_IT staff               26457 non-null  uint8  
+ 35  occyp_type_Laborers               26457 non-null  uint8  
+ 36  occyp_type_Low-skill Laborers     26457 non-null  uint8  
+ 37  occyp_type_Managers               26457 non-null  uint8  
+ 38  occyp_type_Medicine staff         26457 non-null  uint8  
+ 39  occyp_type_Private service staff  26457 non-null  uint8  
+ 40  occyp_type_Realty agents          26457 non-null  uint8  
+ 41  occyp_type_Sales staff            26457 non-null  uint8  
+ 42  occyp_type_Secretaries            26457 non-null  uint8  
+ 43  occyp_type_Security staff         26457 non-null  uint8  
+ 44  occyp_type_Waiters/barmen staff   26457 non-null  uint8  
+ 45  occyp_type_nan                    26457 non-null  uint8  
+ 46  income_type_Commercial associate  26457 non-null  uint8  
+ 47  income_type_Pensioner             26457 non-null  uint8  
+ 48  income_type_State servant         26457 non-null  uint8  
+ 49  income_type_Student               26457 non-null  uint8  
+ 50  income_type_Working               26457 non-null  uint8  
+ 51  family_type_Civil marriage        26457 non-null  uint8  
+ 52  family_type_Married               26457 non-null  uint8  
+ 53  family_type_Separated             26457 non-null  uint8  
+ 54  family_type_Single / not married  26457 non-null  uint8  
+ 55  family_type_Widow                 26457 non-null  uint8  
+ 56  house_type_Co-op apartment        26457 non-null  uint8  
+ 57  house_type_House / apartment      26457 non-null  uint8  
+ 58  house_type_Municipal apartment    26457 non-null  uint8  
+ 59  house_type_Office apartment       26457 non-null  uint8  
+ 60  house_type_Rented apartment       26457 non-null  uint8  
+ 61  house_type_With parents           26457 non-null  uint8  
